@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
@@ -17,6 +18,13 @@ const LoggedOutView = props => {
             Sign in
           </Link>
         </li>
+
+        <li className="nav-item">
+          <Link to="/" className="nav-link">
+            Sign in
+          </Link>
+        </li>
+
 
         <li className="nav-item">
           <Link to="register" className="nav-link">
@@ -54,12 +62,23 @@ const LoggedInView = props => {
           </Link>
         </li>
 
+        <li>
+          <button
+            className="btn btn-outline-danger"
+            onClick={() => {
+              props.logout();
+            }}>
+            Or click here to logout.
+          </button>
+        </li>
+
       </ul>
     );
   }
 
   return null;
 };
+
 
 class Header extends React.Component {
   render() {
@@ -73,10 +92,14 @@ class Header extends React.Component {
 
           <LoggedOutView currentUser={this.props.currentUser} />
 
-          <LoggedInView currentUser={this.props.currentUser} />
+          <LoggedInView currentUser={this.props.currentUser} logout={this.props.logout} />
         </div>
       </nav>
     );
+  }
+
+  componentWillMount() {
+    console.log(this);
   }
 }
 

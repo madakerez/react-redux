@@ -3,7 +3,7 @@ import Header from './Header';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
+import { APP_LOAD, REDIRECT, LOGOUT } from '../constants/actionTypes';
 
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
@@ -16,7 +16,8 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (payload, token) =>
     dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
   onRedirect: () =>
-    dispatch({ type: REDIRECT })
+    dispatch({ type: REDIRECT }),
+  onClickLogout: () => dispatch({ type: LOGOUT })
 });
 
 class App extends React.Component {
@@ -42,7 +43,8 @@ class App extends React.Component {
         <div>
           <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
+            currentUser={this.props.currentUser}
+            logout={this.props.onClickLogout} />
           {this.props.children}
         </div>
       );
@@ -51,7 +53,8 @@ class App extends React.Component {
       <div>
         <Header
           appName={this.props.appName}
-          currentUser={this.props.currentUser} />
+          currentUser={this.props.currentUser}
+          logout={this.props.onClickLogout} />
       </div>
     );
   }
